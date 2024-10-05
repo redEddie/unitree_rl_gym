@@ -13,7 +13,7 @@ class LeggedRobotCfg(BaseConfig):
         test = False
 
     class terrain:
-        mesh_type = "trimesh"  # "heightfield" # none, plane, heightfield or trimesh
+        mesh_type = "plane"  # "heightfield" # none, plane, heightfield or trimesh
         horizontal_scale = 0.1  # [m]
         vertical_scale = 0.005  # [m]
         border_size = 25  # [m]
@@ -51,7 +51,7 @@ class LeggedRobotCfg(BaseConfig):
         num_rows = 10  # number of terrain rows (levels)
         num_cols = 20  # number of terrain cols (types)
         # terrain types: [smooth slope, rough slope, stairs up, stairs down, discrete]
-        terrain_proportions = [0.1, 0.1, 0.35, 0.25, 0.2]
+        terrain_proportions = [0.3, 0.3, 0.2, 0.0, 0.2]
         # trimesh only:
         slope_treshold = (
             0.75  # slopes above this threshold will be corrected to vertical surfaces
@@ -65,10 +65,14 @@ class LeggedRobotCfg(BaseConfig):
         heading_command = True  # if true: compute ang vel command from heading error
 
         class ranges:
-            lin_vel_x = [-1.0, 1.0]  # min max [m/s]
-            lin_vel_y = [-1.0, 1.0]  # min max [m/s]
-            ang_vel_yaw = [-1, 1]  # min max [rad/s]
-            heading = [-3.14, 3.14]
+            lin_vel_x = [0.5, 0.5]  # min max [m/s]
+            lin_vel_y = [0, 0]  # min max [m/s]
+            ang_vel_yaw = [0, 0]  # min max [rad/s]
+            heading = [0, 0]
+            # lin_vel_x = [-3.0, 3.0]  # min max [m/s]
+            # lin_vel_y = [-2.0, 2.0]  # min max [m/s]
+            # ang_vel_yaw = [-1, 1]  # min max [rad/s]
+            # heading = [-3.14, 3.14]
 
     class init_state:
         pos = [0.0, 0.0, 1.0]  # x,y,z [m]
@@ -235,7 +239,7 @@ class LeggedRobotCfgPPO(BaseConfig):
         policy_class_name = "ActorCritic"
         algorithm_class_name = "PPO"
         num_steps_per_env = 24  # per iteration
-        max_iterations = 1500  # number of policy updates
+        max_iterations = 15000  # number of policy updates
 
         # logging
         save_interval = 50  # check for potential saves every this many iterations
