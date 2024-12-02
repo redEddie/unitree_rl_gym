@@ -372,7 +372,11 @@ class LeggedRobot(BaseTask):
                 0.5 * wrap_to_pi(self.commands[:, 3] - heading), -1.0, 1.0
             )
 
-        self.commands[:, 2] = -1 * np.radians(150)
+        time = self.gym.get_sim_time(self.sim)
+        if time > 2.0 and time < 4.0:
+            self.commands[:, 2] = -1 * np.radians(45)
+        else:
+            self.commands[:, 2] = 0.0
 
         if self.cfg.domain_rand.push_robots and (
             self.common_step_counter % self.cfg.domain_rand.push_interval == 0
